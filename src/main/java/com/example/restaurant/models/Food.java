@@ -12,27 +12,32 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(requiredProperties = {"name", "price", "categoryId", "userId"})
 public class Food {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "fd_id", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(description = "auto generated")
     private int id;
 
     @Column(name = "fd_name", length = 150, nullable = false)
     private String name;
 
     @Column(name = "fd_thumbnail", length = 120)
+    @Schema(nullable = true)
     private String thumbnail;
 
     @Column(name = "fd_price", nullable = false)
     private int price;
 
     @Column(name = "fd_description", length = 65535)
+    @Schema(nullable = true)
     private String description;
 
     @Column(name = "fd_youtube_link", length = 120)
+    @Schema(nullable = true)
     private String youtubeLink;
 
     @Column(name = "cf_id", nullable = false)

@@ -12,24 +12,28 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(requiredProperties = {"name"})
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cf_id", nullable = false)
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Schema(description = "auto generated")
     private int id;
 
     @Column(name = "cf_name", nullable = false, length = 120)
     private String name;
 
     @Column(name = "cf_image_link", length = 120)
+    @Schema(nullable = true)
     private String imageLink;
 
     @Column(name = "cf_description", length = 65535)
+    @Schema(nullable = true)
     private String description;
 
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "cf_type")
+    @Schema(type = "number")
     private byte type;
 }

@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "API VJP PRO", version = "1.0.0", description = "Project Java mùa xuân khởi động"), servers = {@Server(url = "/api", description = "Default Server URL")})
+@OpenAPIDefinition(info = @Info(title = "aPI", version = "0.2.6", description = "Java mùa xuân khởi động"), servers = {@Server(url = "/api", description = "Default Server URL")})
 public class RestaurantApplication {
 
     public static void main(String[] args) {
