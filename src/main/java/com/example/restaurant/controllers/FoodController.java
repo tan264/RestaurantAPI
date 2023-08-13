@@ -22,7 +22,7 @@ public class FoodController {
     @Autowired
     FoodService foodService;
 
-    @Operation(summary = "Add food")
+    @Operation(description = "Add food")
     @PostMapping("/add")
     public ResponseEntity<ResponseObject> addFood(@RequestBody Food food) {
         try {
@@ -37,7 +37,7 @@ public class FoodController {
         }
     }
 
-    @Operation(summary = "Get food by id")
+    @Operation(description = "Get food by id")
     @GetMapping("/get")
     public ResponseEntity<ResponseObject> getFoodById(@RequestParam int id) {
         Optional<Food> foundedFood = foodService.getFoodById(id);
@@ -48,8 +48,8 @@ public class FoodController {
                         null)));
     }
 
-    @Operation(summary = "Delete food by id")
-    @DeleteMapping("/delete")
+    @Operation(description = "Delete food by id", summary = "You need login with admin account to do this")
+    @DeleteMapping("/delete-by-id")
     public ResponseEntity<ResponseObject> deleteFoodById(@RequestParam int id) {
         try {
             Food deletedFood = foodService.deleteFoodById(id);
@@ -69,14 +69,29 @@ public class FoodController {
         }
     }
 
-    @Operation(summary = "Update food by id")
-    @PutMapping("/update")
-    public ResponseEntity<ResponseObject> updateFoodById(@RequestParam int id, @RequestBody Food food) {
+    @Operation(description = "Update food by id")
+    @PutMapping("/update-by-id")
+    public ResponseEntity<ResponseObject> updateFoodById(@RequestParam int id,
+            @RequestBody Food food) {
         try {
             Food updatedFood = foodService.updateFood(id, food);
             return ResponseEntity.ok(
                     new ResponseObject(HttpStatus.OK.name(), "Update food successfully",
                             updatedFood));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                            e.getMessage(), null));
+        }
+    }
+
+    @Operation(description = "Get all foods")
+    @GetMapping("/get-all")
+    public ResponseEntity<ResponseObject> getAllFoods() {
+        try {
+            return ResponseEntity.ok()
+                    .body(new ResponseObject(HttpStatus.OK.name(), "Get all food successfully",
+                            foodService.getAllFoods()));
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
                     .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR.name(),

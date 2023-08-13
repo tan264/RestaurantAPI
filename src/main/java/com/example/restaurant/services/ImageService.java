@@ -14,4 +14,17 @@ public class ImageService {
     public Image addImage(Image image) {
         return imageRepository.save(image);
     }
+
+    public Iterable<Image> getAllImages() {
+        return imageRepository.findAll();
+    }
+
+    public Image deleteById(int id) {
+        Image foundedImage = imageRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(
+                        String.format("Image with id = %d does not exist", id)));
+
+        imageRepository.deleteById(id);
+        return foundedImage;
+    }
 }

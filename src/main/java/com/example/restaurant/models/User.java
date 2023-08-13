@@ -69,7 +69,9 @@ public class User {
     public String getRole() {
         if (group == 1) {
             return "ADMIN";
+        } else if (group == 0) {
+            return "USER";
         }
-        return "USER";
+        return "";
     }
 }

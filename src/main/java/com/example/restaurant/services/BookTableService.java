@@ -14,4 +14,17 @@ public class BookTableService {
     public BookTable addBookTable(BookTable bookTable) {
         return bookTableRepository.save(bookTable);
     }
+
+    public Iterable<BookTable> getAllBookTables() {
+        return bookTableRepository.findAll();
+    }
+
+    public BookTable deleteById(int id) {
+        BookTable foundedBookTable = bookTableRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(
+                        String.format("Book table with id = %d does not exist", id)));
+
+        bookTableRepository.deleteById(id);
+        return foundedBookTable;
+    }
 }

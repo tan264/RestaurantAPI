@@ -14,4 +14,17 @@ public class PostService {
     public Post addPost(Post post) {
         return postRepository.save(post);
     }
+
+    public Iterable<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
+    public Post deleteById(int id) {
+        Post foundedPost = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(
+                        String.format("Post with id = %d does not exist", id)));
+
+        postRepository.deleteById(id);
+        return foundedPost;
+    }
 }

@@ -31,25 +31,29 @@ public class FoodService {
         }
     }
 
-    public Food updateFood(int id, Food savedFood) {
+    public Food updateFood(int id, Food newFood) {
         Food food = foodRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Food not found for this id: " + id));
 
-        food.setCategoryId(savedFood.getCategoryId());
-        if (savedFood.getName() != null && !savedFood.getName().isBlank()) {
-            food.setName(savedFood.getName());
+        food.setCategoryId(newFood.getCategoryId());
+        if (newFood.getName() != null && !newFood.getName().isBlank()) {
+            food.setName(newFood.getName());
         }
-        food.setPrice(savedFood.getPrice());
-        if (savedFood.getDescription() != null && !savedFood.getDescription().isBlank()) {
-            food.setDescription(savedFood.getDescription());
+        food.setPrice(newFood.getPrice());
+        if (newFood.getDescription() != null && !newFood.getDescription().isBlank()) {
+            food.setDescription(newFood.getDescription());
         }
-        if (savedFood.getThumbnail() != null && !savedFood.getThumbnail().isBlank()) {
-            food.setThumbnail(savedFood.getThumbnail());
+        if (newFood.getThumbnail() != null && !newFood.getThumbnail().isBlank()) {
+            food.setThumbnail(newFood.getThumbnail());
         }
-        if (savedFood.getYoutubeLink() != null && !savedFood.getYoutubeLink().isBlank()) {
-            food.setYoutubeLink(savedFood.getYoutubeLink());
+        if (newFood.getYoutubeLink() != null && !newFood.getYoutubeLink().isBlank()) {
+            food.setYoutubeLink(newFood.getYoutubeLink());
         }
-        food.setUserId(savedFood.getUserId());
+        food.setUserId(newFood.getUserId());
         return foodRepository.save(food);
+    }
+
+    public Iterable<Food> getAllFoods() {
+        return foodRepository.findAll();
     }
 }

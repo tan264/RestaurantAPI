@@ -2,6 +2,7 @@ package com.example.restaurant.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,8 +29,10 @@ public class SecurityConfig {
         HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(
                 new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.ALL));
         httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                        authorize -> authorize.requestMatchers("/category/**").hasAuthority("ADMIN")
-                                .requestMatchers("/user/getAllUser").hasAuthority("ADMIN")
+                        authorize -> authorize.requestMatchers("/category/add").hasAuthority("ADMIN")
+                                .requestMatchers("/category/update-by-id").hasAuthority("ADMIN")
+                                .requestMatchers("/user/get-all-user").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/**").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .permitAll()
                 ).httpBasic(Customizer.withDefaults())

@@ -33,7 +33,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         String password = authentication.getCredentials().toString();
         Optional<User> foundedUser = userRepository.findUserByUsername(username);
 
-        if(foundedUser.isPresent()) {
+        if (foundedUser.isPresent()) {
             User user = foundedUser.get();
             if (passwordEncoder.matches(password, user.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();

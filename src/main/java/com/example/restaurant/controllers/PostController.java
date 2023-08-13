@@ -21,7 +21,7 @@ public class PostController {
     PostService postService;
 
     @PostMapping("/add")
-    @Operation(summary = "Add post")
+    @Operation(description = "Add post")
     public ResponseEntity<ResponseObject> addPost(@RequestBody Post post) {
         try {
             Post addedPost = postService.addPost(post);
@@ -34,4 +34,33 @@ public class PostController {
                             e.getMessage(), null));
         }
     }
+
+    @GetMapping("/get-all")
+    @Operation(description = "Get all posts")
+    public ResponseEntity<ResponseObject> getAllPosts() {
+        try {
+            return ResponseEntity.ok()
+                    .body(new ResponseObject(HttpStatus.OK.name(), "Add post successfully",
+                            postService.getAllPosts()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                            e.getMessage(), null));
+        }
+    }
+
+    @Operation(summary = "You need login with admin account to do this")
+    @DeleteMapping("/delete-by-id")
+    public ResponseEntity<ResponseObject> deleteById(@RequestParam int id) {
+        try {
+            return ResponseEntity.ok()
+                    .body(new ResponseObject(HttpStatus.OK.name(), "Delete post successfully",
+                            postService.deleteById(id)));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                            e.getMessage(), null));
+        }
+    }
+
 }

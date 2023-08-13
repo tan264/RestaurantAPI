@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.example.restaurant.utils.MyTag.IMAGE;
 
@@ -24,7 +21,7 @@ public class ImageController {
     ImageService imageService;
 
     @PostMapping("/add")
-    @Operation(summary = "Add Image")
+    @Operation(description = "Add Image")
     public ResponseEntity<ResponseObject> addImage(@RequestBody Image image) {
         try {
             Image addedImage = imageService.addImage(image);
@@ -37,4 +34,33 @@ public class ImageController {
                             e.getMessage(), null));
         }
     }
+
+    @GetMapping("/get-all")
+    @Operation(description = "Get all image")
+    public ResponseEntity<ResponseObject> getAllImages() {
+        try {
+            return ResponseEntity.ok()
+                    .body(new ResponseObject(HttpStatus.OK.name(), "Get all images successfully",
+                            imageService.getAllImages()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                            e.getMessage(), null));
+        }
+    }
+
+    @Operation(summary = "You need login with admin account to do this")
+    @DeleteMapping("/delete-by-id")
+    public ResponseEntity<ResponseObject> deleteById(@RequestParam int id) {
+        try {
+            return ResponseEntity.ok()
+                    .body(new ResponseObject(HttpStatus.OK.name(), "Delete image successfully",
+                            imageService.deleteById(id)));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body(new ResponseObject(HttpStatus.INTERNAL_SERVER_ERROR.name(),
+                            e.getMessage(), null));
+        }
+    }
+
 }
